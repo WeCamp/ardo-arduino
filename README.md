@@ -21,6 +21,11 @@ Example: `/play?params=cdec cdec efg efg gagfec gagfec`
 usage: /temp<br>
 Response: `{"return_value": 22, "id": "001", "name": "Ardo", "connected": true}`<br>
 
+**Route /temp**<br>
+usage: /temp<br>
+Response: `{"return_value": 25, "id": "001", "name": "Ardo", "connected": true}`<br>
+<br>
+How lower the return_value how darker it is.<br>
 
 [aRest]: https://github.com/marcoschwartz/aREST
 [SPI]: https://www.arduino.cc/en/Reference/SPI
