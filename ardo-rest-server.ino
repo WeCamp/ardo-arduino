@@ -18,6 +18,7 @@ aREST rest = aREST();
 /* SET PINS */
 int speakerPin     = 9;
 int temperaturePin = 0;
+int lightPin       = 1;
 
 void setup(void)
 {
@@ -27,8 +28,9 @@ void setup(void)
   Serial.begin(9600);
 
   // Function to be exposed
-  rest.function("temp", temperature);
   rest.function("play", playSong);
+  rest.function("temp", temperature);
+  rest.function("light", light);
       
   // Give name and ID to device
   rest.set_id("001");
@@ -103,15 +105,15 @@ void playNote(char note, int duration) {
   }
 }
 
-/* Route: temperature*/
+/* Route: temp */
 int temperature(String command) {
   Serial.println("Starting temperature");
   //getting the voltage reading from the tem
   float temperature = getVoltage(temperaturePin);
 
-  // temperature sensor
+  // perature sensor
   temperature = (temperature - .5) * 100;
-  
+
   return (int)temperature;
 }
 
@@ -119,4 +121,18 @@ float getVoltage(int pin) {
   //converting from a 0 to 1023 digital range
   // to 0 to 5 volts (each 1 reading equals ~ 5 millivolts
   return (analogRead(pin) * .004882814);
+}
+
+/* Route: light */
+int light(String command) {
+  // Read the lightlevel
+  int lightLevel = analogRead(lightPin);
+  
+  //adjust the value 0 to 900 to span 0 to 255
+  lightLevel = map(lightLevel, 0, 900, 0, 255); 
+  
+  // make sure the value is between 0 and 255
+  //lightLevel = constrain(lightLevel, 0, 255);
+  
+  return lightLevel;
 }
